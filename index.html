@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Boot Interview Questions for 6 Years Experience</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #555;
+            margin-top: 30px;
+        }
+        .question {
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        .answer {
+            margin-left: 20px;
+            color: #333;
+        }
+        .answer ul {
+            margin-top: 5px;
+        }
+        .example-box {
+            background-color: #eef6ff;
+            border-left: 4px solid #007acc;
+            padding: 10px 15px;
+            margin: 10px 0 20px 20px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        details {
+            margin-bottom: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        summary {
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>Spring Boot Interview Questions</h1>
+
+<details>
+    <summary>Core Spring Boot (Basics & Internals)</summary>
+    <div class="qa">
+        <div class="question">1. What is Spring Boot? How is it different from Spring?</div>
+        <div class="answer">
+            <ul>
+                <li>Spring Boot is a project built on top of the Spring Framework to simplify the setup, configuration, and deployment of Spring applications.</li>
+                <li>It comes with embedded servers like Tomcat, Jetty, or Undertow, removing the need to deploy WAR files.</li>
+                <li>It minimizes the need for external configuration by offering default setups via auto-configuration.</li>
+                <li>Compared to Spring, it promotes rapid application development with opinionated starters and simplified project structure.</li>
+                <li>It reduces boilerplate code by auto-configuring components based on available classpath libraries.</li>
+            </ul>
+        </div>
+
+        <div class="question">2. Explain Spring Boot's auto-configuration mechanism.</div>
+        <div class="answer">
+            <ul>
+                <li>Auto-configuration attempts to automatically configure your Spring application based on the JAR dependencies you have added.</li>
+                <li>It uses <code>@EnableAutoConfiguration</code> to look at the classpath and create beans automatically for various configurations.</li>
+                <li>Auto-configurations are conditionally loaded using <code>@Conditional</code> annotations (like <code>@ConditionalOnClass</code>, <code>@ConditionalOnMissingBean</code>).</li>
+                <li>It is enabled implicitly when using <code>@SpringBootApplication</code>.</li>
+                <li>Developers can override any configuration by defining their own beans in the context.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @EnableAutoConfiguration
+            public class MyAppConfig {
+            // Configuration beans or classpath detected settings are auto-configured here
+            }
+        </div>
+
+        <div class="question">3. What is @SpringBootApplication? What annotations does it combine?</div>
+        <div class="answer">
+            <ul>
+                <li><code>@SpringBootApplication</code> is a convenience annotation that combines:</li>
+                <li><code>@Configuration</code>: Marks the class as a source of bean definitions.</li>
+                <li><code>@EnableAutoConfiguration</code>: Tells Spring Boot to auto-configure the application context.</li>
+                <li><code>@ComponentScan</code>: Enables component scanning on the package of the annotated class.</li>
+                <li>It is typically placed on the main class to bootstrap a Spring Boot application.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @SpringBootApplication
+            public class MyApplication {
+                public static void main(String[] args) {
+                    SpringApplication.run(MyApplication.class, args);
+                    }
+                }
+            }
+        </div>
+
+        <div class="question">4. How does Spring Boot reduce boilerplate configuration?</div>
+        <div class="answer">
+            <ul>
+                <li>Uses starter dependencies (like spring-boot-starter-web) to bundle commonly used libraries.</li>
+                <li>Auto-configures beans based on the dependencies present in the classpath.</li>
+                <li>Eliminates the need for verbose XML configuration files.</li>
+                <li>Supports externalized configuration via property or YAML files (<code>application.properties</code> / <code>application.yml</code>).</li>
+                <li>Includes development tools like devtools and Actuator for monitoring with minimal setup.</li>
+            </ul>
+        </div>
+
+        <div class="question">5. How do you create a Spring Boot application from scratch?</div>
+        <div class="answer">
+            <ul>
+                <li>Use Spring Initializr (https://start.spring.io) to generate the base project with dependencies.</li>
+                <li>Choose your build tool (Maven or Gradle), language, and dependencies (e.g., Web, JPA).</li>
+                <li>Download the zip and import it into your IDE (e.g., IntelliJ or Eclipse).</li>
+                <li>Create a main class with <code>@SpringBootApplication</code> and a main method.</li>
+                <li>Run the application using the generated build file or directly from the IDE.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @SpringBootApplication
+            public class HelloWorldApplication {
+                public static void main(String[] args) {
+                    SpringApplication.run(HelloWorldApplication.class, args);
+                }
+            }
+        </div>
+
+        <div class="question">6. What is Spring Initializr? How do you use it?</div>
+        <div class="answer">
+            <ul>
+                <li>A web-based project generator provided by Spring at https://start.spring.io.</li>
+                <li>Allows you to specify the language (Java/Kotlin/Groovy), build tool (Maven/Gradle), and dependencies.</li>
+                <li>Generates a complete base project with all necessary configuration and dependency files.</li>
+                <li>Speeds up project bootstrapping for new developers and teams.</li>
+                <li>Integrates well with popular IDEs like IntelliJ IDEA and Spring Tool Suite (STS).</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            // Visit https://start.spring.io
+            // Choose project type (Maven/Gradle), language (Java/Kotlin/Groovy), dependencies (e.g., Web, JPA)
+            // Click "Generate" to download your project skeleton
+        </div>
+    </div>
+</details>
+
+<details>
+    <summary>Spring Boot Configuration & Customization</summary>
+    <div class="qa">
+        <div class="question">7. How do you define and use external configurations in Spring Boot?</div>
+        <div class="answer">
+            <ul>
+                <li>External configurations are defined in <code>application.properties</code> or <code>application.yml</code>.</li>
+                <li>You can define key-value pairs for ports, database settings, etc.</li>
+                <li>Use <code>@Value</code> or <code>@ConfigurationProperties</code> to bind configuration to beans.</li>
+                <li>Spring Boot supports different configuration sources like environment variables, command-line arguments, etc.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            # application.properties
+            server.port=8081
+            app.name=DemoApp
+
+            # In Java
+            @Value("${app.name}")
+            private String appName;
+        </div>
+
+        <div class="question">8. What is application.properties vs application.yml?</div>
+        <div class="answer">
+            <ul>
+                <li><code>application.properties</code> uses flat key-value pairs.</li>
+                <li><code>application.yml</code> supports hierarchical and structured configuration.</li>
+                <li>Both are functionally similar and are loaded by Spring Boot automatically.</li>
+                <li>YAML is more readable for complex nested configuration.</li>
+            </ul>
+        </div>
+
+        <div class="question">9. How do you use profiles (@Profile) in Spring Boot?</div>
+        <div class="answer">
+            <ul>
+                <li>Use <code>@Profile("dev")</code> to activate beans for a specific environment.</li>
+                <li>Profiles are activated via <code>spring.profiles.active</code> in properties or as environment variables.</li>
+                <li>You can create separate property files like <code>application-dev.properties</code>.</li>
+                <li>Useful for environment-specific beans and configurations.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            # application.properties
+            spring.profiles.active=dev
+
+            # application-dev.properties
+            logging.level.org.springframework=DEBUG
+
+            // Java Bean
+            @Profile("dev")
+            @Bean
+            public DataSource devDataSource() {
+                return new HikariDataSource();
+            }
+        </div>
+
+        <div class="question">10. How do you create custom properties and bind them using @ConfigurationProperties?</div>
+        <div class="answer">
+            <ul>
+                <li>Create a POJO class with appropriate fields and getters/setters.</li>
+                <li>Annotate it with <code>@ConfigurationProperties(prefix = "custom")</code>.</li>
+                <li>Register it as a bean using <code>@Component</code> or <code>@EnableConfigurationProperties</code>.</li>
+                <li>Define the properties in <code>application.properties</code> or <code>application.yml</code>.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            # application.yml
+            custom:
+            username: admin
+            timeout: 5000
+
+            // POJO
+            @Component
+            @ConfigurationProperties(prefix = "custom")
+            public class CustomConfig {
+                private String username;
+                private int timeout;
+                // getters and setters
+            }
+        </div>
+
+        <div class="question">11. What are the differences between @Value and @ConfigurationProperties?</div>
+        <div class="answer">
+            <ul>
+                <li><code>@Value</code> is used for injecting individual properties.</li>
+                <li><code>@ConfigurationProperties</code> binds a group of related properties to a bean.</li>
+                <li><code>@Value</code> does not support complex nested structures easily.</li>
+                <li><code>@ConfigurationProperties</code> is preferred for mapping structured configs and supports validation.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            // Using @Value
+            @Value("${server.port}")
+            private int port;
+
+            // Using @ConfigurationProperties
+            @ConfigurationProperties(prefix = "server")
+            public class ServerConfig {
+                private int port;
+                // getter/setter
+            }
+        </div>
+
+        <div class="question">12. How to override default configuration of Spring Boot auto-configured beans?</div>
+        <div class="answer">
+            <ul>
+                <li>Define a bean of the same type in your configuration class.</li>
+                <li>Spring Boot will prioritize your custom bean over the default one.</li>
+                <li>Use <code>@ConditionalOnMissingBean</code> to create fallbacks in auto-configurations.</li>
+                <li>Properties can also be overridden using external configuration files or environment variables.</li>
+            </ul>
+        </div>
+
+        <div class="question">13. What is the order of precedence in Spring Boot property resolution?</div>
+        <div class="answer">
+            <ul>
+                <li>Command-line arguments</li>
+                <li>Java system properties (System.getProperties)</li>
+                <li>OS environment variables</li>
+                <li>Application properties files (application.yml/properties)</li>
+                <li>Default properties defined in <code>@SpringBootApplication</code> or SpringApplication</li>
+            </ul>
+        </div>
+
+        <div class="question">14. What is a custom @Conditional annotation?</div>
+        <div class="answer">
+            <ul>
+                <li>It allows conditional bean registration based on custom logic.</li>
+                <li>Implemented using a class that implements <code>Condition</code> interface.</li>
+                <li>Use <code>@Conditional(MyCustomCondition.class)</code> on bean definitions.</li>
+                <li>Useful for advanced scenarios where registration depends on runtime checks.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            public class MyCustomCondition implements Condition {
+                @Override
+                public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+                    return context.getEnvironment().containsProperty("custom.enabled");
+                }
+            }
+
+            @Bean
+            @Conditional(MyCustomCondition.class)
+            public MyService myService() {
+                return new MyService();
+            }
+        </div>
+    </div>
+</details>
+
+<details>
+    <summary>Dependency Injection & Bean Lifecycle</summary>
+    <div class="qa">
+        <div class="question">15. What are the different types of dependency injection in Spring Boot?</div>
+        <div class="answer">
+            <ul>
+                <li>Constructor Injection – Preferred method; promotes immutability and testability.</li>
+                <li>Setter Injection – Useful for optional dependencies.</li>
+                <li>Field Injection – Less preferred; limits testability and immutability.</li>
+            </ul>
+        </div>
+
+        <div class="question">16. When should you use @Autowired vs constructor injection?</div>
+        <div class="answer">
+            <ul>
+                <li><code>@Autowired</code> can be used with constructors, setters, or fields.</li>
+                <li>Constructor injection is the recommended way as it enables final fields and easier testing.</li>
+                <li>Field injection hides dependencies and complicates unit testing.</li>
+            </ul>
+        </div>
+
+        <div class="question">17. What is the bean lifecycle in Spring?</div>
+        <div class="answer">
+            <ul>
+                <li>Bean Instantiation – Container creates the bean instance.</li>
+                <li>Dependency Injection – Dependencies are injected by the container.</li>
+                <li>Bean Post Processing – Custom logic before/after initialization (<code>BeanPostProcessor</code>).</li>
+                <li>Initialization – <code>@PostConstruct</code> or <code>afterPropertiesSet()</code> is called.</li>
+                <li>Destruction – <code>@PreDestroy</code> or <code>destroy()</code> is invoked during shutdown.</li>
+            </ul>
+        </div>
+
+        <div class="question">18. How do you define a custom BeanPostProcessor or BeanFactoryPostProcessor?</div>
+        <div class="answer">
+            <ul>
+                <li>Implement <code>BeanPostProcessor</code> or <code>BeanFactoryPostProcessor</code> interface.</li>
+                <li>Override required methods like <code>postProcessBeforeInitialization</code>.</li>
+                <li>Register it as a Spring bean in your configuration class.</li>
+                <li>Used for modifying bean properties or behavior during initialization.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @Component
+            public class CustomBeanPostProcessor implements BeanPostProcessor {
+                @Override
+                public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+                    System.out.println("Before Initialization: " + beanName);
+                    return bean;
+                }
+            }
+        </div>
+
+        <div class="question">19. How do scopes like singleton, prototype, request, and session behave in Boot?</div>
+        <div class="answer">
+            <ul>
+                <li><strong>Singleton</strong> – Default scope; one instance per Spring container.</li>
+                <li><strong>Prototype</strong> – A new instance is created every time it is requested.</li>
+                <li><strong>Request</strong> – Scoped to an HTTP request (Web-aware contexts).</li>
+                <li><strong>Session</strong> – Scoped to an HTTP session (Web-aware contexts).</li>
+                <li>Use <code>@Scope("prototype")</code> or <code>@Scope("request")</code> to specify scope.</li>
+            </ul>
+        </div>
+    </div>
+</details>
+
+<details>
+    <summary>Spring MVC & REST APIs</summary>
+    <div class="qa">
+        <div class="question">20. How do you create REST APIs in Spring Boot?</div>
+        <div class="answer">
+            <ul>
+                <li>Use <code>@RestController</code> to define a controller where all methods return domain objects instead of views, making it suitable for REST APIs.</li>
+                <li>Define API endpoints using mapping annotations like <code>@GetMapping</code>, <code>@PostMapping</code>, <code>@PutMapping</code>, etc., each mapping to an HTTP method.</li>
+                <li>Return Java objects or collections directly from controller methods, which Spring Boot serializes into JSON using Jackson.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @RestController
+            @RequestMapping("/api")
+            public class MyController {
+                @GetMapping("/hello")
+                public String sayHello() {
+                    return "Hello World";
+                }
+            }
+        </div>
+
+        <div class="question">21. What are @RestController, @Controller, and @ResponseBody?</div>
+        <div class="answer">
+            <ul>
+                <li><code>@Controller</code> marks a class as a Spring MVC controller, typically returning views (e.g., JSP or Thymeleaf).</li>
+                <li><code>@ResponseBody</code> tells Spring to serialize the return value of a method directly into the HTTP response body instead of rendering a view.</li>
+                <li><code>@RestController</code> is a meta-annotation that combines <code>@Controller</code> and <code>@ResponseBody</code>, used for creating REST APIs more conveniently.</li>
+            </ul>
+        </div>
+
+        <div class="question">22. How does @RequestParam differ from @PathVariable?</div>
+        <div class="answer">
+            <ul>
+                <li><code>@RequestParam</code> is used to extract query parameters from the URL, typically used for filtering, sorting, or passing optional inputs.</li>
+                <li><code>@PathVariable</code> is used to extract values embedded in the URI path and is commonly used for uniquely identifying resources.</li>
+                <li><code>@RequestParam</code> expects the key to be in the query string, while <code>@PathVariable</code> binds directly to placeholders defined in the URI.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @GetMapping("/users")
+            public User getUser(@RequestParam String id) {...}
+
+            @GetMapping("/users/{id}")
+            public User getUserById(@PathVariable String id) {...}
+        </div>
+
+        <div class="question">23. How do you implement exception handling in Spring Boot REST APIs?</div>
+        <div class="answer">
+            <ul>
+                <li>Use <code>@ControllerAdvice</code> to create a global exception handler that can catch exceptions thrown by any controller.</li>
+                <li>Define specific methods annotated with <code>@ExceptionHandler</code> to handle particular exception types and return appropriate HTTP responses.</li>
+                <li>Enhance client experience by sending meaningful error messages and status codes using <code>ResponseEntity</code>.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @ControllerAdvice
+            public class GlobalExceptionHandler {
+
+                @ExceptionHandler(ResourceNotFoundException.class)
+                public ResponseEntity<String> handleNotFound(ResourceNotFoundException ex) {
+
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+                }
+            }
+        </div>
+
+        <div class="question">24. What is ResponseEntity and when do you use it?</div>
+        <div class="answer">
+            <ul>
+                <li><code>ResponseEntity</code> is a generic wrapper for an HTTP response, allowing you to specify the status code, headers, and response body explicitly.</li>
+                <li>It's useful when you need to customize the HTTP status or return headers alongside the body content.</li>
+                <li>Commonly used in exception handlers or when returning different statuses (e.g., 200 OK, 201 CREATED, 400 BAD REQUEST).</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+        </div>
+
+        <div class="question">25. How do you use HATEOAS with Spring Boot?</div>
+        <div class="answer">
+            <ul>
+                <li>Spring HATEOAS is a module that helps create RESTful APIs with hypermedia links to improve API discoverability.</li>
+                <li>Use <code>EntityModel</code> to wrap your response object and attach <code>Link</code> instances representing navigable endpoints.</li>
+                <li>Add Spring HATEOAS dependency to your project and use static methods like <code>linkTo</code> and <code>methodOn</code> to generate links.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            EntityModel<User> model = EntityModel.of(user);
+            model.add(Link.of("/api/users/" + user.getId(), "self"));
+            return model;
+        </div>
+
+        <div class="question">26. What are HttpMessageConverters?</div>
+        <div class="answer">
+            <ul>
+                <li>HttpMessageConverters are used by Spring MVC to convert HTTP requests and responses into Java objects and vice versa.</li>
+                <li>Spring Boot auto-configures converters like JacksonHttpMessageConverter for JSON, and others for XML or plain text.</li>
+                <li>You can customize or register additional converters by extending <code>WebMvcConfigurer</code> and overriding <code>configureMessageConverters()</code>.</li>
+            </ul>
+        </div>
+    </div>
+</details>
+
+<details>
+    <summary>Data Access (Spring Data JPA, JDBC)</summary>
+    <div class="qa">
+        <div class="question">27. What is Spring Data JPA? How does it simplify data access?</div>
+        <div class="answer">
+            <ul>
+                <li>Spring Data JPA is a part of the Spring Data project that aims to simplify the implementation of JPA-based data access layers.</li>
+                <li>It provides a set of high-level abstractions for working with databases, reducing the amount of boilerplate code required.</li>
+                <li>Developers can define repository interfaces by extending Spring Data interfaces, and Spring automatically provides the implementation at runtime.</li>
+                <li>It supports query generation from method names, pagination, sorting, and auditing out of the box.</li>
+                <li>Integrates seamlessly with Hibernate and other JPA providers.</li>
+            </ul>
+        </div>
+
+        <div class="question">28. Difference between CrudRepository, JpaRepository, and PagingAndSortingRepository?</div>
+        <div class="answer">
+            <ul>
+                <li><strong>CrudRepository</strong>: Provides basic CRUD operations such as save, findById, findAll, deleteById. Ideal for simple use cases.</li>
+                <li><strong>PagingAndSortingRepository</strong>: Adds support for pagination and sorting capabilities via methods like <code>findAll(Pageable pageable)</code>.</li>
+                <li><strong>JpaRepository</strong>: Extends both CrudRepository and PagingAndSortingRepository and adds more JPA-specific functionality like flushing the persistence context and batch deletes.</li>
+            </ul>
+        </div>
+
+        <div class="question">29. How do you handle custom queries in Spring Data?</div>
+        <div class="answer">
+            <ul>
+                <li>Custom queries can be defined using method name conventions, such as <code>findByEmailAndStatus</code>, which Spring parses into appropriate JPQL queries.</li>
+                <li>Use the <code>@Query</code> annotation when method naming becomes too complex or insufficient for the query you want to express.</li>
+                <li>Supports named queries defined via <code>@NamedQuery</code> on entity classes, which are useful for static query definitions reused across the application.</li>
+                <li>Repositories can also be customized by writing implementation classes manually and linking them with the custom interface.</li>
+            </ul>
+        </div>
+
+        <div class="question">30. What is the use of @Query annotation?</div>
+        <div class="answer">
+            <ul>
+                <li>The <code>@Query</code> annotation allows developers to write JPQL or native SQL queries directly within repository interfaces.</li>
+                <li>It bypasses the need for derived query methods, offering better control and flexibility for complex logic.</li>
+                <li>You can use named parameters (e.g., <code>:status</code>) or positional parameters (e.g., <code>?1</code>).</li>
+                <li>Combined with <code>nativeQuery=true</code>, it allows writing raw SQL queries for performance-critical operations or database-specific logic.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @Query("SELECT u FROM User u WHERE u.status = :status")
+            List<User> findByStatus(@Param("status") String status);
+        </div>
+
+        <div class="question">31. How to handle transactions in Spring Boot?</div>
+        <div class="answer">
+            <ul>
+                <li>Spring Boot supports declarative transaction management using the <code>@Transactional</code> annotation from Spring Framework.</li>
+                <li>You can annotate service layer methods or entire classes to ensure the operations execute within a transactional context.</li>
+                <li>If any runtime exception is thrown, the transaction is automatically rolled back; checked exceptions require manual configuration for rollback.</li>
+                <li>Transactions can be customized using attributes such as isolation level, propagation behavior, timeout, and rollback rules.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @Transactional
+            public void updateAccountBalance(...) {
+                // transactional logic
+            }
+        </div>
+
+        <div class="question">32. How to use native SQL queries and projections?</div>
+        <div class="answer">
+            <ul>
+                <li>Use <code>@Query</code> with <code>nativeQuery = true</code> to execute raw SQL queries for complex or performance-optimized queries.</li>
+                <li>Projections allow you to retrieve only a subset of entity attributes by defining DTO interfaces or classes.</li>
+                <li>Spring automatically maps the query result to the projection interface using getters matching the alias names in SQL results.</li>
+                <li>Reduces overhead by avoiding full entity loading, making it ideal for read-only views or API responses.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @Query(value = "SELECT name, email FROM users WHERE active = true", nativeQuery = true)
+            List<Object[]> findActiveUserDetails();
+
+            interface UserProjection {
+                String getName();
+                String getEmail();
+            }
+        </div>
+    </div>
+</details>
+
+<details>
+    <summary>Error Handling & Validation</summary>
+    <div class="qa">
+        <div class="question">33. How to handle exceptions globally using @ControllerAdvice?</div>
+        <div class="answer">
+            <ul>
+                <li>Use <code>@ControllerAdvice</code> to define a global exception handler that applies to all controllers in the application.</li>
+                <li>Define methods within the class using <code>@ExceptionHandler</code> to catch specific exception types.</li>
+                <li>Return customized error messages, HTTP status codes, and optionally include stack traces or error codes.</li>
+                <li>Helps separate exception handling logic from controller code and ensures consistency in API responses.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @ControllerAdvice
+            public class GlobalExceptionHandler {
+                @ExceptionHandler(EntityNotFoundException.class)
+                public ResponseEntity<String> handleNotFound(EntityNotFoundException ex) {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Entity not found: " + ex.getMessage());
+                }
+            }
+        </div>
+
+        <div class="question">34. What is the role of @Valid, @Validated, and custom validators?</div>
+        <div class="answer">
+            <ul>
+                <li><code>@Valid</code> is a JSR-303 annotation used to trigger validation on method parameters or bean fields.</li>
+                <li><code>@Validated</code> is a Spring-specific annotation that provides group-based validation capabilities.</li>
+                <li>Both can be applied on controller method parameters, service layer arguments, or entity classes.</li>
+                <li>Custom validators can be created by implementing <code>ConstraintValidator</code> and annotated with a custom <code>@Constraint</code>.</li>
+                <li>Validation errors can be captured using <code>BindingResult</code> or <code>MethodArgumentNotValidException</code>.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            public class UserDTO {
+                    @NotBlank(message = "Username is required")
+                    private String username;
+
+                    @Email(message = "Invalid email format")
+                    private String email;
+            }
+
+            @PostMapping("/register")
+            public ResponseEntity<String> registerUser(@Valid @RequestBody UserDTO user) {
+                return ResponseEntity.ok("Registered");
+            }
+        </div>
+
+        <div class="question">35. How do you return custom error responses in REST?</div>
+        <div class="answer">
+            <ul>
+                <li>Create a custom error response class to structure your error message, timestamp, and error details.</li>
+                <li>Return instances of this class from within your <code>@ExceptionHandler</code> methods.</li>
+                <li>Use <code>ResponseEntity</code> to include HTTP status codes alongside the custom body.</li>
+                <li>This improves client experience by standardizing error formats across endpoints.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            public class ErrorResponse {
+                private String message;
+                private LocalDateTime timestamp;
+                private String details;
+
+                // Constructors, getters, setters
+            }
+
+            @ExceptionHandler(Exception.class)
+            public ResponseEntity<ErrorResponse> handleGeneric(Exception ex, WebRequest request) {
+                ErrorResponse err = new ErrorResponse("Server error", LocalDateTime.now(), request.getDescription(false));
+                return new ResponseEntity<>(err, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        </div>
+    </div>
+</details>
+
+<details>
+    <summary>Security (Spring Security)</summary>
+    <div class="qa">
+        <div class="question">36. How do you secure a Spring Boot application?</div>
+        <div class="answer">
+            <ul>
+                <li>Spring Boot integrates Spring Security by default when the dependency is added, securing all endpoints with HTTP Basic authentication.</li>
+                <li>You can override this behavior by configuring a <code>SecurityFilterChain</code> or extending <code>WebSecurityConfigurerAdapter</code> (pre-Spring Security 5.7).</li>
+                <li>Secure endpoints using annotations like <code>@PreAuthorize</code> or by defining custom access rules via the HttpSecurity DSL.</li>
+                <li>Supports authentication providers like in-memory, JDBC, LDAP, and OAuth2.</li>
+            </ul>
+        </div>
+
+        <div class="question">37. What is the difference between authentication and authorization?</div>
+        <div class="answer">
+            <ul>
+                <li><strong>Authentication</strong> verifies the identity of a user (e.g., username/password validation).</li>
+                <li><strong>Authorization</strong> determines whether an authenticated user has permission to access a specific resource.</li>
+                <li>Authentication is typically handled by a login mechanism, while authorization is managed using roles and access control rules.</li>
+            </ul>
+        </div>
+
+        <div class="question">38. How to implement JWT-based authentication?</div>
+        <div class="answer">
+            <ul>
+                <li>Use libraries like <code>jjwt</code> or <code>auth0</code> for JWT handling.</li>
+                <li>Generate JWT upon successful login and send it in the Authorization header (Bearer token) for each request.</li>
+                <li>Create a filter that validates incoming JWTs and sets the SecurityContext.</li>
+                <li>JWTs should be signed and optionally encrypted for integrity and confidentiality.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6...
+        </div>
+
+        <div class="question">39. What is method-level security (@PreAuthorize, @Secured)?</div>
+        <div class="answer">
+            <ul>
+                <li>Method-level security restricts access to individual methods using annotations like <code>@PreAuthorize</code> and <code>@Secured</code>.</li>
+                <li><code>@PreAuthorize</code> uses SpEL to express complex rules like roles or conditions on method parameters.</li>
+                <li><code>@Secured</code> is simpler and only supports role-based access control.</li>
+                <li>Enable method security using <code>@EnableMethodSecurity</code> or <code>@EnableGlobalMethodSecurity</code> in the configuration class.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @PreAuthorize("hasRole('ADMIN')")
+            public void deleteUser(Long id) {...}
+        </div>
+
+        <div class="question">40. How do you configure password encoders?</div>
+        <div class="answer">
+            <ul>
+                <li>Password encoders are used to hash and verify passwords securely.</li>
+                <li>Use <code>BCryptPasswordEncoder</code> as it is recommended for its strength and adaptive hashing.</li>
+                <li>Define a <code>PasswordEncoder</code> bean in your configuration to integrate with the authentication provider.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @Bean
+            public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+            }
+        </div>
+    </div>
+</details>
+
+<details>
+    <summary>Spring Boot Testing</summary>
+    <div class="qa">
+        <div class="question">41. What is @SpringBootTest vs @WebMvcTest vs @DataJpaTest?</div>
+        <div class="answer">
+            <ul>
+                <li><code>@SpringBootTest</code>: Loads the complete application context. Best for integration tests involving multiple layers (controller, service, repository).</li>
+                <li><code>@WebMvcTest</code>: Loads only the web layer (controllers and related components), useful for focused unit testing of controllers.</li>
+                <li><code>@DataJpaTest</code>: Configures an in-memory database and scans JPA repositories, ideal for testing JPA repository behavior in isolation.</li>
+            </ul>
+        </div>
+
+        <div class="question">42. How do you write integration tests for REST endpoints?</div>
+        <div class="answer">
+            <ul>
+                <li>Use <code>@SpringBootTest</code> along with <code>TestRestTemplate</code> or <code>MockMvc</code> to perform HTTP requests and validate responses.</li>
+                <li>Annotate test classes with <code>@AutoConfigureMockMvc</code> when using <code>MockMvc</code>.</li>
+                <li>Write assertions against status codes, headers, and JSON responses.</li>
+                <li>Use <code>@Transactional</code> for tests involving database modifications to ensure data cleanup.</li>
+            </ul>
+        </div>
+
+        <div class="question">43. How do you mock services using @MockBean?</div>
+        <div class="answer">
+            <ul>
+                <li><code>@MockBean</code> is used to mock and inject a bean into the Spring ApplicationContext for testing.</li>
+                <li>Replaces the actual bean with a mock version in tests annotated with <code>@SpringBootTest</code> or <code>@WebMvcTest</code>.</li>
+                <li>Works seamlessly with Mockito to define expectations and behavior.</li>
+                <li>Ensures isolation of the component under test by removing dependencies on other layers.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @MockBean
+            private UserService userService;
+
+            when(userService.getUser()).thenReturn(new User("John"));
+        </div>
+
+        <div class="question">44. What is TestRestTemplate and when to use it?</div>
+        <div class="answer">
+            <ul>
+                <li><code>TestRestTemplate</code> is a convenient alternative to <code>RestTemplate</code> used specifically for integration testing in Spring Boot.</li>
+                <li>Supports synchronous HTTP calls and simplifies testing of REST APIs.</li>
+                <li>It is injected automatically in tests annotated with <code>@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)</code>.</li>
+                <li>Can be used to validate full end-to-end flows from the controller down to the database layer.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @Autowired
+            private TestRestTemplate restTemplate;
+
+            ResponseEntity<String> response = restTemplate.getForEntity("/api/hello", String.class);
+            assertEquals(HttpStatus.OK, response.getStatusCode());
+        </div>
+    </div>
+</details>
+
+<details>
+    <summary>Spring Boot Actuator & Monitoring</summary>
+    <div class="qa">
+        <div class="question">45. What is Spring Boot Actuator? What endpoints are available?</div>
+        <div class="answer">
+            <ul>
+                <li>Spring Boot Actuator provides production-ready features for monitoring and managing applications.</li>
+                <li>It exposes a set of built-in endpoints such as <code>/actuator/health</code>, <code>/actuator/info</code>, <code>/actuator/metrics</code>, <code>/actuator/env</code>, etc.</li>
+                <li>Custom endpoints can also be created using the <code>@Endpoint</code> or <code>@ReadOperation</code> annotations.</li>
+                <li>Endpoints can be enabled or disabled individually in <code>application.properties</code>.</li>
+            </ul>
+        </div>
+
+        <div class="question">46. How do you secure actuator endpoints?</div>
+        <div class="answer">
+            <ul>
+                <li>Use Spring Security to restrict access to actuator endpoints.</li>
+                <li>Define access control rules in your <code>SecurityFilterChain</code> configuration.</li>
+                <li>For example, allow unauthenticated access to <code>/actuator/health</code> but secure others using roles.</li>
+                <li>Set the property <code>management.endpoints.web.exposure.include</code> to control visibility.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            management.endpoints.web.exposure.include=health,info
+            management.endpoints.web.exposure.exclude=env,beans
+        </div>
+
+        <div class="question">47. How do you customize health checks?</div>
+        <div class="answer">
+            <ul>
+                <li>Implement the <code>HealthIndicator</code> interface and override <code>health()</code> method to provide custom logic.</li>
+                <li>Register your custom implementation as a Spring bean.</li>
+                <li>It will automatically be included in the output of <code>/actuator/health</code>.</li>
+                <li>Useful for checking dependencies like database connections, APIs, or disk space.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @Component
+            public class MyServiceHealthIndicator implements HealthIndicator {
+                @Override
+                public Health health() {
+                    return Health.up().withDetail("myService", "Available").build();
+                }
+            }
+        </div>
+
+        <div class="question">48. How to integrate Prometheus or Micrometer with Spring Boot?</div>
+        <div class="answer">
+            <ul>
+                <li>Micrometer is the metrics facade integrated with Spring Boot Actuator.</li>
+                <li>Add the <code>micrometer-registry-prometheus</code> dependency to enable Prometheus support.</li>
+                <li>Prometheus scrapes metrics from <code>/actuator/prometheus</code> endpoint.</li>
+                <li>Configure Prometheus to collect data periodically and visualize it using Grafana.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            <!-- Add to pom.xml -->
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-registry-prometheus</artifactId>
+            </dependency>
+        </div>
+    </div>
+</details>
+
+<details>
+    <summary>Logging & Metrics</summary>
+    <div class="qa">
+        <div class="question">49. How do you configure logging levels in Spring Boot?</div>
+        <div class="answer">
+            <ul>
+                <li>Spring Boot uses <code>application.properties</code> or <code>application.yml</code> to configure logging levels.</li>
+                <li>You can specify log levels for packages or classes using <code>logging.level</code> prefix.</li>
+                <li>Supports levels: <code>TRACE</code>, <code>DEBUG</code>, <code>INFO</code>, <code>WARN</code>, <code>ERROR</code>, <code>OFF</code>.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            logging.level.org.springframework=INFO
+            logging.level.com.mycompany.myapp=DEBUG
+        </div>
+
+        <div class="question">50. What is the default logging framework used?</div>
+        <div class="answer">
+            <ul>
+                <li>Spring Boot uses <strong>Logback</strong> as the default logging framework.</li>
+                <li>It provides built-in support for log file rotation, filtering, and formatting.</li>
+                <li>Other logging frameworks like Log4j2 or Java Util Logging can be used by excluding Logback and adding the respective dependency.</li>
+            </ul>
+        </div>
+
+        <div class="question">51. How do you integrate external loggers like Logback or Log4j2?</div>
+        <div class="answer">
+            <ul>
+                <li>To use Logback: create a custom <code>logback-spring.xml</code> file in the classpath with your configuration.</li>
+                <li>To use Log4j2: exclude Spring Boot's default logging and add <code>spring-boot-starter-log4j2</code> to your dependencies.</li>
+                <li>Spring Boot will automatically detect and use the provided configuration files (e.g., <code>log4j2-spring.xml</code>).</li>
+                <li>Allows customization of log patterns, appenders, and log rotation policies.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            <!-- Maven example for Log4j2 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-log4j2</artifactId>
+            </dependency>
+        </div>
+    </div>
+</details>
+
+<details>
+    <summary>Spring Boot with Messaging Systems</summary>
+    <div class="qa">
+        <div class="question">52. How to integrate Kafka with Spring Boot?</div>
+        <div class="answer">
+            <ul>
+                <li>Add the <code>spring-kafka</code> dependency to your project.</li>
+                <li>Configure Kafka properties in <code>application.properties</code> (e.g., bootstrap servers, topic names).</li>
+                <li>Use <code>@KafkaListener</code> to consume messages and <code>KafkaTemplate</code> to produce them.</li>
+                <li>Spring Boot auto-configures the Kafka producer and consumer factories using the provided configuration.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @KafkaListener(topics = "my-topic", groupId = "group_id")
+            public void consume(String message) {
+                System.out.println("Received: " + message);
+            }
+
+            @Autowired
+            private KafkaTemplate<String, String> kafkaTemplate;
+            kafkaTemplate.send("my-topic", "Hello Kafka");
+        </div>
+
+        <div class="question">53. What is Spring Cloud Stream?</div>
+        <div class="answer">
+            <ul>
+                <li>Spring Cloud Stream is a framework for building event-driven microservices using messaging middleware like Kafka or RabbitMQ.</li>
+                <li>Abstracts message brokers behind binders and provides a simple programming model for message publishing and consumption.</li>
+                <li>Uses <code>@EnableBinding</code>, <code>@StreamListener</code>, and functional binding model with suppliers and consumers.</li>
+                <li>Greatly simplifies messaging logic and promotes decoupled architecture.</li>
+            </ul>
+        </div>
+
+        <div class="question">54. How do you consume and produce messages using Spring Boot?</div>
+        <div class="answer">
+            <ul>
+                <li>Use <code>KafkaTemplate</code> to publish messages to a Kafka topic.</li>
+                <li>Use <code>@KafkaListener</code> to annotate a method that handles incoming messages.</li>
+                <li>For RabbitMQ, use <code>RabbitTemplate</code> and <code>@RabbitListener</code> similarly.</li>
+                <li>Ensure correct serialization and deserialization strategies are defined via producer and consumer configs.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            // Kafka Producer
+            kafkaTemplate.send("topic-name", "event-data");
+
+            // Kafka Consumer
+            @KafkaListener(topics = "topic-name")
+            public void listen(String message) {
+                log.info("Consumed: " + message);
+            }
+        </div>
+    </div>
+</details>
+
+<details>
+    <summary>Spring Boot with Kafka & MQ (Advanced)</summary>
+    <div class="qa">
+        <div class="question">55. How to configure Kafka consumers and producers in Spring Boot?</div>
+        <div class="answer">
+            <ul>
+                <li>Use <code>application.properties</code> or <code>application.yml</code> to configure producer and consumer properties.</li>
+                <li>Configure serializers/deserializers, group id, bootstrap servers, and concurrency.</li>
+                <li>Spring Boot auto-configures the <code>KafkaTemplate</code> and <code>ConcurrentKafkaListenerContainerFactory</code>.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            # application.properties
+            spring.kafka.bootstrap-servers=localhost:9092
+            spring.kafka.consumer.group-id=my-group
+            spring.kafka.consumer.auto-offset-reset=earliest
+            spring.kafka.producer.key-serializer=org.apache.kafka.common.serialization.StringSerializer
+            spring.kafka.producer.value-serializer=org.apache.kafka.common.serialization.StringSerializer
+        </div>
+
+        <div class="question">56. What is a Kafka listener container?</div>
+        <div class="answer">
+            <ul>
+                <li>It’s a Spring-managed component that listens to Kafka topics and delegates messages to <code>@KafkaListener</code> methods.</li>
+                <li>Supports concurrent message consumption using multiple threads (via <code>concurrency</code> setting).</li>
+                <li>Manages error handling, retries, and acknowledgment strategies internally.</li>
+                <li>Configured through <code>ConcurrentKafkaListenerContainerFactory</code>.</li>
+            </ul>
+        </div>
+
+        <div class="question">57. How to manage offset manually in Kafka?</div>
+        <div class="answer">
+            <ul>
+                <li>Use <code>ackMode = MANUAL</code> in the container factory configuration.</li>
+                <li>Inject <code>Acknowledgment</code> in your <code>@KafkaListener</code> method and call <code>ack.acknowledge()</code> after successful processing.</li>
+                <li>This gives fine-grained control over when offsets are committed, useful in error-prone environments.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @KafkaListener(topics = "topic", containerFactory = "manualAckContainerFactory")
+            public void listen(String msg, Acknowledgment ack) {
+                process(msg);
+                ack.acknowledge();
+            }
+        </div>
+
+        <div class="question">58. How do you achieve exactly-once delivery in Kafka?</div>
+        <div class="answer">
+            <ul>
+                <li>Enable <code>enable.idempotence=true</code> on the producer to avoid duplicate sends.</li>
+                <li>Use transactional producers and set <code>transactional.id</code> to ensure atomicity.</li>
+                <li>Wrap both producer send and consumer offset commit in a single Kafka transaction.</li>
+                <li>Ensure idempotent processing logic to handle duplicates gracefully.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            producer.initTransactions();
+            producer.beginTransaction();
+            producer.send(...);
+            producer.commitTransaction();
+        </div>
+
+        <div class="question">59. How to handle message retries and dead letter queues?</div>
+        <div class="answer">
+            <ul>
+                <li>Configure <code>SeekToCurrentErrorHandler</code> with retry backoff and max attempts.</li>
+                <li>Use <code>DeadLetterPublishingRecoverer</code> to redirect failed messages to a dead-letter topic after retries are exhausted.</li>
+                <li>Dead letter topics help in isolating bad messages for later inspection or reprocessing.</li>
+                <li>Enable <code>EnableKafka</code> and configure a retry-aware <code>KafkaListenerContainerFactory</code>.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            factory.setErrorHandler(new SeekToCurrentErrorHandler(
+            new DeadLetterPublishingRecoverer(kafkaTemplate), new FixedBackOff(1000L, 3)));
+        </div>
+    </div>
+</details>
+
+<details>
+    <summary>Concurrency & Multi-threading (Advanced)</summary>
+    <div class="qa">
+        <div class="question">60. How do you create async processes in Spring Boot?</div>
+        <div class="answer">
+            <ul>
+                <li>Use the <code>@Async</code> annotation to run methods asynchronously in the background thread.</li>
+                <li>Enable asynchronous processing using <code>@EnableAsync</code> in a configuration class.</li>
+                <li>Return <code>Future</code>, <code>CompletableFuture</code>, or <code>void</code> depending on the requirement.</li>
+            </ul>
+        </div>
+
+        <div class="question">61. What is @Async? How do you configure Executor?</div>
+        <div class="answer">
+            <ul>
+                <li><code>@Async</code> is a Spring annotation that allows the execution of a method in a separate thread.</li>
+                <li>To configure the thread pool executor, define a <code>TaskExecutor</code> bean with desired pool size and queue capacity.</li>
+                <li>Set the name of the executor with <code>@Async("executorName")</code> to use a specific bean.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @Bean(name = "asyncExecutor")
+            public Executor taskExecutor() {
+                ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+                executor.setCorePoolSize(5);
+                executor.setMaxPoolSize(10);
+                executor.setQueueCapacity(500);
+                executor.setThreadNamePrefix("Async-");
+                executor.initialize();
+                return executor;
+            }
+        </div>
+
+        <div class="question">62. How do you schedule jobs with @Scheduled?</div>
+        <div class="answer">
+            <ul>
+                <li>Use the <code>@Scheduled</code> annotation to schedule tasks at fixed rate, delay, or using cron expressions.</li>
+                <li>Enable scheduling with <code>@EnableScheduling</code> annotation on the configuration class.</li>
+                <li>Useful for running periodic tasks like report generation, cleanup jobs, etc.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @Scheduled(fixedRate = 5000)
+            public void runTask() {
+                System.out.println("Running scheduled task");
+            }
+        </div>
+
+        <div class="question">63. How do you manage concurrent access to shared resources?</div>
+        <div class="answer">
+            <ul>
+                <li>Use Java concurrency utilities like <code>synchronized</code>, <code>ReentrantLock</code>, or <code>ReadWriteLock</code>.</li>
+                <li>Use database locks for distributed systems — optimistic (versioning) or pessimistic locks.</li>
+                <li>For in-memory caches, use concurrent data structures like <code>ConcurrentHashMap</code>.</li>
+            </ul>
+        </div>
+
+        <div class="question">64. What are ThreadPoolTaskExecutor and ScheduledThreadPoolExecutor?</div>
+        <div class="answer">
+            <ul>
+                <li><code>ThreadPoolTaskExecutor</code> is a Spring-managed thread pool for asynchronous method execution.</li>
+                <li>Allows configuration of core size, max size, queue capacity, and rejection policy.</li>
+                <li><code>ScheduledThreadPoolExecutor</code> is a JDK executor for scheduled tasks supporting delay and periodic execution.</li>
+                <li>Can be used for custom scheduling instead of <code>@Scheduled</code>.</li>
+            </ul>
+        </div>
+
+        <div class="question">65. How do you implement rate-limiting or throttling?</div>
+        <div class="answer">
+            <ul>
+                <li>Use token bucket or leaky bucket algorithm to limit requests per time unit.</li>
+                <li>Apply filters or interceptors at the controller level.</li>
+                <li>Use libraries like Bucket4j or Resilience4j RateLimiter.</li>
+                <li>For distributed apps, use Redis or other external stores to maintain request counters.</li>
+            </ul>
+        </div>
+
+        <div class="question">66. How do you handle concurrent DB writes safely?</div>
+        <div class="answer">
+            <ul>
+                <li>Use optimistic locking via <code>@Version</code> in JPA entities to detect and prevent concurrent update conflicts.</li>
+                <li>Use pessimistic locking (e.g., <code>PESSIMISTIC_WRITE</code>) for critical sections.</li>
+                <li>Ensure atomic operations using database transactions and isolation levels.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @Version
+            private Long version; // Enables optimistic locking in JPA
+        </div>
+    </div>
+</details>
+
+<details>
+    <summary>Microservices Patterns</summary>
+    <div class="qa">
+        <div class="question">67. How do you implement service discovery (Eureka, Consul)?</div>
+        <div class="answer">
+            <ul>
+                <li>Use Spring Cloud Netflix Eureka or Spring Cloud Consul for dynamic service discovery.</li>
+                <li>Register microservices with the discovery server using <code>@EnableEurekaClient</code> or <code>@EnableDiscoveryClient</code>.</li>
+                <li>Use <code>DiscoveryClient</code> or service names in Feign clients to resolve service addresses dynamically.</li>
+            </ul>
+        </div>
+
+        <div class="question">68. How do you use Spring Cloud Config?</div>
+        <div class="answer">
+            <ul>
+                <li>Spring Cloud Config provides centralized external configuration management for microservices.</li>
+                <li>Set up a config server with Git or filesystem backend.</li>
+                <li>Use <code>@EnableConfigServer</code> on the server and <code>spring.cloud.config.uri</code> on the clients.</li>
+                <li>Supports dynamic refresh of configurations using Spring Cloud Bus and <code>@RefreshScope</code>.</li>
+            </ul>
+        </div>
+
+        <div class="question">69. What is circuit breaker pattern? How do you use Resilience4j?</div>
+        <div class="answer">
+            <ul>
+                <li>A circuit breaker prevents cascading failures in distributed systems by stopping attempts to reach failing services.</li>
+                <li>Resilience4j is a lightweight fault tolerance library offering circuit breakers, rate limiters, retries, etc.</li>
+                <li>Use <code>@CircuitBreaker</code> annotation to wrap service calls and fallback logic for failure handling.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            @CircuitBreaker(name = "backendService", fallbackMethod = "fallback")
+            public String callBackend() {
+            return restTemplate.getForObject("http://service/api", String.class);
+            }
+        </div>
+
+        <div class="question">70. What is an API Gateway? How do you use Spring Cloud Gateway?</div>
+        <div class="answer">
+            <ul>
+                <li>An API Gateway routes requests to appropriate services and handles cross-cutting concerns like logging, rate-limiting, and security.</li>
+                <li>Spring Cloud Gateway is a non-blocking, reactive gateway built on Spring WebFlux.</li>
+                <li>Define routes and predicates in <code>application.yml</code> or Java config to route traffic dynamically.</li>
+            </ul>
+        </div>
+
+        <div class="question">71. How do you trace requests across services (Zipkin/Sleuth)?</div>
+        <div class="answer">
+            <ul>
+                <li>Spring Cloud Sleuth adds trace and span IDs to logs for distributed tracing.</li>
+                <li>Use Zipkin to collect and visualize trace data from multiple services.</li>
+                <li>Enable tracing by including Sleuth and Zipkin dependencies; traces are auto-propagated over HTTP and messaging systems.</li>
+            </ul>
+        </div>
+
+        <div class="question">72. What is service orchestration vs choreography?</div>
+        <div class="answer">
+            <ul>
+                <li><strong>Orchestration</strong>: A central service coordinates tasks across services (e.g., using Camunda, BPM).</li>
+                <li><strong>Choreography</strong>: Services react to events without a central controller, ensuring loose coupling (event-driven architecture).</li>
+                <li>Orchestration suits complex workflows, while choreography fits reactive, scalable systems.</li>
+            </ul>
+        </div>
+    </div>
+</details>
+
+<details>
+    <summary>Deployment & CI/CD</summary>
+    <div class="qa">
+        <div class="question">73. How to create a Docker image for Spring Boot app?</div>
+        <div class="answer">
+            <ul>
+                <li>Create a Dockerfile in the root of your Spring Boot project.</li>
+                <li>Use a base image like <code>openjdk</code> or <code>adoptopenjdk</code> and copy your JAR file into the image.</li>
+                <li>Expose the port your application runs on and define the entry point with <code>ENTRYPOINT</code>.</li>
+                <li>Build the image using <code>docker build -t myapp .</code> and run it with <code>docker run</code>.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            FROM openjdk:17-jdk-alpine
+            COPY target/app.jar app.jar
+            ENTRYPOINT ["java", "-jar", "/app.jar"]
+        </div>
+
+        <div class="question">74. How to run Spring Boot in Kubernetes?</div>
+        <div class="answer">
+            <ul>
+                <li>Package the Spring Boot app as a Docker image and push it to a container registry (e.g., Docker Hub, ECR).</li>
+                <li>Create Kubernetes deployment and service YAML files specifying the image, replicas, ports, etc.</li>
+                <li>Use <code>kubectl apply -f deployment.yaml</code> to deploy your app.</li>
+                <li>Optionally use Helm charts or Kustomize for templated deployments and versioning.</li>
+            </ul>
+        </div>
+
+        <div class="question">75. How to use profiles for environment-specific configurations in deployment?</div>
+        <div class="answer">
+            <ul>
+                <li>Use <code>application-{profile}.properties</code> or <code>.yml</code> files to define environment-specific settings.</li>
+                <li>Activate profiles using <code>SPRING_PROFILES_ACTIVE</code> environment variable or <code>--spring.profiles.active</code> command line argument.</li>
+                <li>Each profile can override base configuration, allowing flexibility in dev, QA, staging, and prod environments.</li>
+            </ul>
+        </div>
+
+        <div class="question">76. What are the best practices for production configuration?</div>
+        <div class="answer">
+            <ul>
+                <li>Enable health checks, monitoring, and metrics via Spring Boot Actuator.</li>
+                <li>Use environment variables or externalized configuration to avoid hardcoding secrets.</li>
+                <li>Enable secure HTTPS, CSRF protection, and role-based access control.</li>
+                <li>Use proper logging configuration with file rotation and log aggregation.</li>
+                <li>Test configuration changes in staging before promoting to production.</li>
+            </ul>
+        </div>
+    </div>
+</details>
+
+<details>
+    <summary>Performance Tuning</summary>
+    <div class="qa">
+        <div class="question">77. How to tune connection pools (HikariCP)?</div>
+        <div class="answer">
+            <ul>
+                <li>HikariCP is the default connection pool used in Spring Boot (since 2.0).</li>
+                <li>Configure properties like <code>maximumPoolSize</code>, <code>minimumIdle</code>, <code>idleTimeout</code>, and <code>maxLifetime</code> in <code>application.properties</code>.</li>
+                <li>Monitor connection pool metrics using Spring Boot Actuator or JMX.</li>
+                <li>Avoid setting max pool size too high; start with number of cores * 2.</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            spring.datasource.hikari.maximum-pool-size=10
+            spring.datasource.hikari.idle-timeout=30000
+            spring.datasource.hikari.max-lifetime=1800000
+        </div>
+
+        <div class="question">78. How to detect memory leaks or CPU spikes in Spring Boot?</div>
+        <div class="answer">
+            <ul>
+                <li>Use monitoring tools like VisualVM, JConsole, or Java Flight Recorder (JFR) to inspect JVM performance.</li>
+                <li>Enable GC logs and monitor heap usage, GC frequency, and thread dumps.</li>
+                <li>Integrate Spring Boot Actuator with Prometheus + Grafana for observability.</li>
+                <li>Check for unclosed resources and thread leaks in long-running services.</li>
+            </ul>
+        </div>
+
+        <div class="question">79. How to optimize startup time and reduce memory footprint?</div>
+        <div class="answer">
+            <ul>
+                <li>Remove unnecessary dependencies and auto-configurations using <code>@SpringBootApplication(exclude = ...)</code>.</li>
+                <li>Use lazy initialization by setting <code>spring.main.lazy-initialization=true</code>.</li>
+                <li>Reduce log level and avoid heavy log operations during startup.</li>
+                <li>Precompile configuration using tools like Spring AOT or GraalVM native image (for extreme cases).</li>
+            </ul>
+        </div>
+    </div>
+</details>
+
+</body>
+</html>
