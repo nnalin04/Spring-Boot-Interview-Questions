@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Java Interview Questions - 6 to 7 Years Experience</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 2em;
+          background-color: #f8f9fa;
+          color: #212529;
+        }
+        h2 {
+          color: #0d6efd;
+          margin-top: 1.5em;
+        }
+        .answer {
+          margin-bottom: 1.5em;
+          background-color: #ffffff;
+          padding: 1em;
+          border-left: 5px solid #0d6efd;
+        }
+        code {
+          background-color: #e9ecef;
+          padding: 0.2em 0.4em;
+          border-radius: 4px;
+          font-size: 0.95em;
+        }
+        pre {
+          background-color: #f1f3f5;
+          padding: 1em;
+          border-radius: 5px;
+          overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+<h1>Java Interview Questions with Detailed Answers (6–7 Years Experience)</h1>
+
+<h2>1. Core Java</h2>
+
+<div class="answer">
+    <strong>Q: What are the key features introduced in Java 8, 9, 11, and 17?</strong>
+    <p><strong>Java 8</strong> introduced major changes with functional programming: Lambda expressions let you treat code as data; Stream API lets you process collections in a functional style; Functional interfaces like <code>Predicate</code>, <code>Function</code>; Optional helps avoid null checks; new Date/Time API (<code>java.time</code>) solves many design issues in <code>java.util.Date</code>.</p>
+    <p><strong>Java 9</strong> brought the Module System (Jigsaw) allowing better modularization and encapsulation. <code>JShell</code> enabled interactive experimentation. <code>Flow API</code> introduced reactive stream processing.</p>
+    <p><strong>Java 11</strong> removed older deprecated APIs, introduced <code>HttpClient</code> (supports async, sync HTTP calls), new string methods like <code>strip()</code>, <code>repeat()</code>, <code>isBlank()</code>, and improved performance/stability.</p>
+    <p><strong>Java 17</strong> added Sealed classes for controlled inheritance, Pattern matching for <code>switch</code>, Strong encapsulation of JDK internals, and became a long-term support (LTS) release.</p>
+</div>
+
+<div class="answer">
+    <strong>Q: Explain the differences between <code>==</code> and <code>.equals()</code>.</strong>
+    <p><code>==</code> checks if two references point to the same object in memory. It does not compare content. Use this for primitives or to verify reference equality.</p>
+    <p><code>.equals()</code> checks for logical equivalence. For Strings or custom objects, override <code>equals()</code> to compare values.</p>
+    <pre><code>String x = new String("hello");
+String y = new String("hello");
+System.out.println(x == y);       // false
+System.out.println(x.equals(y));  // true</code></pre>
+</div>
+
+<div class="answer">
+    <strong>Q: How does Java handle memory management and garbage collection?</strong>
+    <p>Java has automatic memory management using the Garbage Collector (GC). It manages heap memory where objects are allocated. The JVM identifies unreachable objects and cleans them to free space.</p>
+    <p>Memory is divided into Young Generation (Eden + Survivor spaces), Old Generation (tenured), and Metaspace. Popular GCs: Serial, Parallel, CMS (deprecated), G1 (default in Java 9+), ZGC, Shenandoah.</p>
+    <p>GC tuning and profiling tools include VisualVM, JConsole, GC logs, and Java Flight Recorder.</p>
+</div>
+
+<div class="answer">
+    <strong>Q: What is the difference between <code>HashMap</code>, <code>Hashtable</code>, and <code>ConcurrentHashMap</code>?</strong>
+    <p><code>HashMap</code> is not thread-safe and allows one <code>null</code> key and multiple <code>null</code> values. It provides constant-time complexity O(1) for put/get in most cases.</p>
+    <p><code>Hashtable</code> is thread-safe but uses coarse-grained synchronization, which causes performance bottlenecks.</p>
+    <p><code>ConcurrentHashMap</code> is thread-safe and uses finer-grained locking (segment-level or bucket-level), allowing concurrent reads and controlled writes without locking the entire map.</p>
+</div>
+
+<div class="answer">
+    <strong>Q: How does <code>synchronized</code> work in Java? What are its drawbacks?</strong>
+    <p><code>synchronized</code> blocks or methods lock access to prevent multiple threads from executing simultaneously on the same object. It guarantees atomicity and visibility.</p>
+    <p>Drawbacks include potential deadlocks, performance overhead due to lock contention, and difficulty in debugging concurrency bugs. Use <code>ReentrantLock</code> or <code>java.util.concurrent</code> utilities for advanced control.</p>
+</div>
+
+<div class="answer">
+    <strong>Q: What is the difference between <code>final</code>, <code>finally</code>, and <code>finalize()</code>?</strong>
+    <ul>
+        <li><code>final</code>: Declares constants, prevents method overriding, and class inheritance.</li>
+        <li><code>finally</code>: Ensures a block of code runs regardless of exception, typically for resource cleanup.</li>
+        <li><code>finalize()</code>: Called by GC before object deletion. Deprecated due to unpredictable behavior and alternatives like try-with-resources.</li>
+    </ul>
+</div>
+
+<div class="answer">
+    <strong>Q: What are the principles of OOP and how are they implemented in Java?</strong>
+    <ul>
+        <li><strong>Encapsulation:</strong> Private fields with public getters/setters to protect data.</li>
+        <li><strong>Abstraction:</strong> Hiding implementation details using interfaces and abstract classes.</li>
+        <li><strong>Inheritance:</strong> Code reuse via <code>extends</code>. Enables hierarchical relationships.</li>
+        <li><strong>Polymorphism:</strong> Method overloading (compile-time) and overriding (runtime) to provide flexibility.</li>
+    </ul>
+    <pre><code>abstract class Animal {
+  abstract void speak();
+}
+
+class Dog extends Animal {
+  void speak() { System.out.println("Bark"); }
+}</code></pre>
+</div>
+
+<div class="answer">
+    <strong>Q: What is the difference between <code>ArrayList</code> and <code>LinkedList</code>?</strong>
+    <p><code>ArrayList</code> uses a dynamic array. It offers fast access (O(1)) by index but slow insertions/deletions (O(n)) in the middle.</p>
+    <p><code>LinkedList</code> is a doubly linked list. It supports fast insertions/removals (O(1)) at head/tail but slow access (O(n)).</p>
+    <p>Use <code>ArrayList</code> when frequent random access is required, <code>LinkedList</code> for frequent inserts/removes.</p>
+</div>
+
+<div class="answer">
+    <strong>Q: Explain method overloading vs method overriding.</strong>
+    <p><strong>Overloading:</strong> Same method name with different parameters in the same class. It provides compile-time polymorphism.</p>
+    <p><strong>Overriding:</strong> Subclass provides specific implementation of a method defined in a superclass. It provides runtime polymorphism.</p>
+    <pre><code>class Parent {
+  void greet() { System.out.println("Hello"); }
+}
+class Child extends Parent {
+  void greet() { System.out.println("Hi"); }
+}</code></pre>
+</div>
+
+<div class="answer">
+    <strong>Q: What is the <code>volatile</code> keyword? When should it be used?</strong>
+    <p><code>volatile</code> ensures that the value of a variable is always read from main memory, not thread-local cache. It guarantees visibility but not atomicity.</p>
+    <p>Use when multiple threads read/write a single variable, and atomicity is not a concern (e.g., flags).</p>
+    <pre><code>private volatile boolean running = true;</code></pre>
+</div>
+
+<div class="answer">
+    <strong>Q: How does autoboxing and unboxing work in Java?</strong>
+    <p><strong>Autoboxing:</strong> Automatic conversion of a primitive to its corresponding wrapper type.</p>
+    <p><strong>Unboxing:</strong> Conversion from wrapper type to primitive.</p>
+    <pre><code>Integer obj = 10; // autoboxing
+int val = obj;   // unboxing</code></pre>
+    <p>This simplifies code when using generics and collections.</p>
+</div>
+
+<div class="answer">
+    <strong>Q: What are enums and how are they used?</strong>
+    <p><code>enum</code> defines a fixed set of constants. It improves type safety and readability.</p>
+    <pre><code>enum Direction {
+  NORTH, SOUTH, EAST, WEST
+}
+Direction d = Direction.NORTH;</code></pre>
+    <p>Enums can have constructors, fields, and methods, making them more powerful than constants.</p>
+</div>
+
+<div class="answer">
+    <strong>Q: What are static blocks and when are they executed?</strong>
+    <p>Static blocks are used for static initialization of a class. They are executed once when the class is loaded into memory.</p>
+    <pre><code>static {
+  System.out.println("Static block executed");
+}</code></pre>
+    <p>Useful for complex static variable initialization.</p>
+</div>
+
+<div class="answer">
+    <strong>Q: How does Java handle pass-by-value vs pass-by-reference?</strong>
+    <p>Java is strictly pass-by-value. For primitives, it passes the actual value. For objects, it passes the value of the reference.</p>
+    <p>This means changes to object fields are reflected outside, but reassigning the object inside a method does not affect the original reference.</p>
+    <pre><code>void changeName(Person p) {
+  p.setName("John"); // modifies original object
+  p = new Person();   // doesn't affect the caller
+}</code></pre>
+</div>
+
+</body>
+</html>
